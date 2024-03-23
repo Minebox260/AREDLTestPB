@@ -13,7 +13,7 @@ onMounted(async () => {
     } else {
       nextTick(async () => {
         store.permissions = await pb.send("/api/user/permissions", {})
-        //console.log(store.permissions)
+        console.log(store.permissions)
       })
     }
   }, true)
@@ -25,7 +25,6 @@ watch(store, () => {
   if (store.color) {
     localStorage.setItem('color', store.color)
     item.style.setProperty("--color-primary", store.color)
-    console.log("test")
   } else {
     localStorage.setItem('color', '')
     item.style.setProperty("--color-primary", item.style.getPropertyValue('--color-default-primary'))

@@ -20,6 +20,30 @@ const doLogout = async() => {
   pb.authStore.clear()
 }
 
+const requestApiKey= async () => {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': pb.authStore.token,
+    },
+    body: JSON.stringify({}),
+  };
+  fetch("https://api.aredl.net/api/user/api-key", requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("failed request");
+        }
+        return response.json();
+      })
+      .then(data => {
+        navigator.clipboard.writeText(data.api_key)
+        alert("Copied api key");
+      }).catch(error => console.error(error))
+
+
+}
+
 </script>
 
 <template>
@@ -32,6 +56,11 @@ const doLogout = async() => {
           <RouterLink :to="{ name: 'Leaderboard', params: {id: store.user.id}}" class="profile_link">
             <span>Profile</span>
           </RouterLink>
+        </li>
+        <li v-if="store.hasPermission('global.user_request_api_key').value" class="profile_link">
+          <button @click="requestApiKey">
+            <span>Copy Api Key</span>
+          </button>
         </li>
         <li v-if="store.hasPermission('aredl.user_submit').value">
           <RouterLink :to="{ name: 'Submit'}" class="profile_link">

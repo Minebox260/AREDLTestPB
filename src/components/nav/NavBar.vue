@@ -50,7 +50,7 @@ const toggleNavMenu = () => {
         <ColorPicker class="color-picker" @color-change="data => store.color = data.cssColor" :color="store.color || '#ff6f00'" alpha-channel="hide" :visible-formats="['hex']"/>
         <button @click="() =>{store.color = ''; isColorPickerOpen = false}">Reset</button>
       </div>
-      <!--<ProfileNav></ProfileNav> -->
+      <ProfileNav></ProfileNav>
     </div>
   </div>
 </template>
